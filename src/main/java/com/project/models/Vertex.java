@@ -2,6 +2,7 @@ package com.project.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by brianmomongan on 21/04/16.
@@ -21,6 +22,12 @@ public class Vertex<T> {
         Neighbor<T> neighbor = new Neighbor<>(destination, edge);
         neighbors.add(neighbor);
     }
+
+    public int getEdge(Vertex<T> fromVertex) {
+        Optional<Neighbor<T>> tNeighbor = neighbors.stream().filter(v -> v.getVertex() == fromVertex).findFirst();
+        return tNeighbor.isPresent() ? tNeighbor.get().getEdge() : -1;
+    }
+
 
     public T getElement() {
         return element;

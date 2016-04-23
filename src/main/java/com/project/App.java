@@ -12,13 +12,7 @@ public class App {
     public static void main(String[] args) {
 
         DiGraph<String> graph = new DiGraph<>();
-        List<String> routes = Arrays.asList("AB5 AD2 AE4 BC3 BD6 BE8 CE8 DE6".split(" "));
-        routes.forEach(route -> {
-            String src = route.charAt(0) + "";
-            String dst = route.charAt(1) + "";
-            Integer edge = Integer.parseInt(route.substring(2));
-            graph.createGraph(src, dst, edge);
-        });
+        graph.createGraph("AB5 AD2 AE4 BC3 BD6 BE8 CE8 DE6");
         String distance = "ABDEX ".trim();
         System.out.println(graph.findDistance(distance, distance.length() - 1));
         graph
