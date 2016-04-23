@@ -1,6 +1,7 @@
 package com.project.models;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by brianmomongan on 21/04/16.
@@ -48,4 +49,26 @@ public class DiGraph<T extends String> {
             else return edge + findDistance(route, length - 1);
         }
     }
+
+    private Set<Vertex<T>> depthFirstSearch(Vertex<T> firstVertex, Set<Vertex<T>> found) {
+        if (found.contains(firstVertex)) return found;
+        else {
+            System.out.println(firstVertex.getElement());
+            found.add(firstVertex);
+            firstVertex
+                    .getNeighbors()
+                    .stream()
+                    .map(v -> v.getVertex())
+                    .sorted((x, y) -> x.getElement().compareTo(y.getElement()))
+                    .forEach(vertex -> depthFirstSearch(vertex, found));
+            return found;
+        }
+    }
+
+    public Set<Vertex<T>> dfsEntryPt(T element) {
+        return depthFirstSearch(vertices.get(element), new HashSet<>());
+    }
 }
+
+
+

@@ -15,6 +15,7 @@ public class App {
         graph.createGraph("AB5 AD2 AE4 BC3 BD6 BE8 CE8 DE6");
         String distance = "ABDEX ".trim();
         System.out.println(graph.findDistance(distance, distance.length() - 1));
+        System.out.println();
         graph
                 .getVertices()
                 .values()
