@@ -53,22 +53,48 @@ public class DiGraph<T extends String> {
     private Set<Vertex<T>> depthFirstSearch(Vertex<T> firstVertex, Set<Vertex<T>> found) {
         if (found.contains(firstVertex)) return found;
         else {
-            System.out.println(firstVertex.getElement());
             found.add(firstVertex);
             firstVertex
                     .getNeighbors()
                     .stream()
-                    .map(v -> v.getVertex())
+                    .map(Neighbor::getVertex)
                     .sorted((x, y) -> x.getElement().compareTo(y.getElement()))
                     .forEach(vertex -> depthFirstSearch(vertex, found));
             return found;
         }
     }
 
-    public Set<Vertex<T>> dfsEntryPt(T element) {
-        return depthFirstSearch(vertices.get(element), new HashSet<>());
+    public Set<Vertex<T>> dfs(T element, Set<Vertex<T>> set) {
+        if (vertices.containsKey(element)) return depthFirstSearch(vertices.get(element), set);
+        else return set;
+    }
+
+    private Set<Vertex<T>> breadthFirstSearch(Vertex<T> firstVertex, Set<Vertex<T>> found, Queue<Vertex<T>> queue) {
+        if (queue.isEmpty()) return found;
+        else {
+            queue.remove();
+            firstVertex
+                    .getNeighbors()
+                    .stream()
+                    .map(Neighbor::getVertex)
+                    .sorted((x, y) -> x.getElement().compareTo(y.getElement()))
+                    .forEach(vertex -> {
+                        if (found.add(vertex)) queue.add(vertex);
+                    });
+            return breadthFirstSearch(queue.peek(), found, queue);
+        }
+    }
+
+    public Set<Vertex<T>> bfs(T element, Set<Vertex<T>> set, Queue<Vertex<T>> queue) {
+        if (vertices.containsKey(element)) {
+            Vertex<T> vertex = vertices.get(element);
+            queue.add(vertex);
+            set.add(vertex);
+            return breadthFirstSearch(queue.peek(), set, queue);
+        } else return set;
     }
 }
+
 
 
 
