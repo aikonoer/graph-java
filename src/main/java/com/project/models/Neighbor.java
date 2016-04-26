@@ -20,4 +20,12 @@ public class Neighbor<T> {
     public int getEdge() {
         return edge;
     }
+
+    public void setEdge(int edge) {
+        this.edge = edge;
+    }
+
+    public void setVertex(Vertex<T> vertex) {
+        this.vertex = vertex;
+    }
 }

@@ -1,11 +1,10 @@
 package com.project;
 
 import com.project.models.DiGraph;
-import com.project.models.Vertex;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * Hello world!
@@ -14,11 +13,10 @@ public class App {
     public static void main(String[] args) {
 
         DiGraph<String> graph = new DiGraph<>();
-        graph.createGraph("AB5 AD2 AE4 BC3 BD6 BE8 CE8 DE6");
-        String distance = "ABDEX ".trim();
-        System.out.println(graph.findDistance(distance, distance.length() - 1));
-        Set<Vertex<String>> graphbfs = graph.bfs("E", new HashSet<>(), new LinkedList<>());
-        Set<Vertex<String>> graphdfs = graph.dfs("E", new HashSet<>());
+        String graphRoutes = "AB20 AD80 AG90 BF10 CF50 CD10 CH20 DC10 DG20 EG30 EB50 FC10 FD40 GA20";
+        graph.createGraph(graphRoutes);
+        String shortest = graph.dijkstraShortestPath("A", "G", new HashMap<>(), new HashSet<>(), new LinkedList<>());
+        System.out.println(shortest);
         System.out.println();
     }
 }

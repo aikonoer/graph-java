@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public class Vertex<T> {
 
-    private List<Neighbor<T>> neighbors = new ArrayList<>();
-    private T element;
+    final private List<Neighbor<T>> neighbors = new ArrayList<>();
+    final private T element;
 
     Vertex(T element) {
         this.element = element;
