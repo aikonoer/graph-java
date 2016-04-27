@@ -49,7 +49,7 @@ public class DiGraph<T extends String> {
         }
     }
 
-    private Set<Vertex<T>> dfsRecurse(Vertex<T> firstVertex, Set<Vertex<T>> found) {
+    private Set<Vertex<T>> dfsLoop(Vertex<T> firstVertex, Set<Vertex<T>> found) {
         if (found.contains(firstVertex)) return found;
         else {
             found.add(firstVertex);
@@ -58,13 +58,13 @@ public class DiGraph<T extends String> {
                     .stream()
                     .map(Neighbor::getVertex)
                     .sorted((x, y) -> x.getElement().compareTo(y.getElement()))
-                    .forEach(vertex -> dfsRecurse(vertex, found));
+                    .forEach(vertex -> dfsLoop(vertex, found));
             return found;
         }
     }
 
     public Set<Vertex<T>> depthFirstSearch(T element, Set<Vertex<T>> set) {
-        if (vertices.containsKey(element)) return dfsRecurse(vertices.get(element), set);
+        if (vertices.containsKey(element)) return dfsLoop(vertices.get(element), set);
         else return set;
     }
 
@@ -94,7 +94,6 @@ public class DiGraph<T extends String> {
     }
 
     private Map<Vertex<T>, Neighbor<T>> dspLoop(Vertex<T> current, Vertex<T> toVertex, Map<Vertex<T>, Neighbor<T>> found, Set<Vertex<T>> uniqueQueue, Queue<Vertex<T>> queue) {
-//        System.out.println(current.getElement());
         if (queue.isEmpty()) return found;
         else if (found.containsKey(toVertex) && found.get(current).getEdge() > found.get(toVertex).getEdge()) {
             uniqueQueue.remove(queue.peek());
@@ -125,6 +124,13 @@ public class DiGraph<T extends String> {
         }
     }
 
+    private String dsPaths(Vertex<T> from, Vertex<T> to, Map<Vertex<T>, Neighbor<T>> map) {
+        if (from == to) return from.getElement();
+        else {
+            return dsPaths(map.get(from).getVertex(), to, map) + from.getElement();
+        }
+    }
+
     public String dijkstraShortestPath(T from, T to, Map<Vertex<T>, Neighbor<T>> found, Set<Vertex<T>> uniqueQueue, Queue<Vertex<T>> queue) {
         Vertex<T> fromVertex = vertices.get(from);
         Vertex<T> toVertex = vertices.get(to);
@@ -136,11 +142,25 @@ public class DiGraph<T extends String> {
         return map.containsKey(toVertex) ? dsPaths(toVertex, fromVertex, map) + map.get(toVertex).getEdge() : "Not found";
     }
 
-    private String dsPaths(Vertex<T> from, Vertex<T> to, Map<Vertex<T>, Neighbor<T>> map) {
-        if (from == to) return from.getElement();
+    private Set<String> prLoop(Vertex<T> currentVertex, Integer currentDistance, String currentRoute, Vertex<T> toVertex, Integer max, Set<String> found) {
+        if (currentDistance > max) return found;
         else {
-            return dsPaths(map.get(from).getVertex(), to, map) + from.getElement();
+            if (currentVertex == toVertex) found.add(currentRoute + currentDistance);
+            currentVertex
+                    .getNeighbors()
+                    .stream()
+                    .forEach(tNeighbor -> prLoop(tNeighbor.getVertex()
+                            , currentDistance + tNeighbor.getEdge()
+                            , currentRoute + tNeighbor.getVertex().getElement()
+                            , toVertex, max, found));
+            return found;
         }
+    }
+
+    public Set<String> possibleRoutes(T from, T to, Integer max, Set<String> list) {
+        Vertex<T> fromVertex = vertices.get(from);
+        Vertex<T> toVertex = vertices.get(to);
+        return prLoop(fromVertex, 0, new String(from), toVertex, max, list);
     }
 }
 
