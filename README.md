@@ -15,6 +15,11 @@ Implemented the Djikstra Shortest Path
 Scanned vertex in a Depth First Search traversal method.
 
 Solutions made in such a way that it follows the functional paradigm. However, collections are mutable to reduce complexity.
+------------
+Assumptions:
+
+1. Only positive distance is considered.
+2. Input data format must be as mentioned.
 
 ------------
 
