@@ -12,13 +12,13 @@ import java.util.Set;
 /**
  * Created by brianmomongan on 29/04/16.
  */
-public class DiGraphTest extends TestCase {
+public class GraphTest extends TestCase {
 
-    DiGraph<String> graph;
+    Graph<String> graph;
 
     @Before
     public void setUp() throws Exception {
-        graph = new DiGraph<>();
+        graph = new Graph<>();
         String graphRoutes = "AB20 AD80 AG90 BF10 CF50 CD10 CH20 DC10 DG20 EG30 EB50 FC10 FD40 GA20";
         graph.createGraph(graphRoutes);
     }

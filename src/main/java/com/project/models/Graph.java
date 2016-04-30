@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by brianmomongan on 21/04/16.
  */
-public class DiGraph<T extends String> {
+public class Graph<T extends String> {
 
     final private Map<T, Vertex<T>> vertices = new HashMap<>();
 
@@ -139,7 +139,7 @@ public class DiGraph<T extends String> {
         queue.add(fromVertex);
         Map<Vertex<T>, Neighbor<T>> map = dspLoop(fromVertex, vertices.get(to), found, uniqueQueue, queue);
 
-        return map.containsKey(toVertex) ? dsPaths(toVertex, fromVertex, map) + map.get(toVertex).getEdge() : "Not found";
+        return map.containsKey(toVertex) ? dsPaths(toVertex, fromVertex, map) + map.get(toVertex).getEdge() : null;
     }
 
     private Set<String> prLoop(Vertex<T> currentVertex, Integer currentDistance, String currentRoute, Vertex<T> toVertex, Integer max, Set<String> found) {
