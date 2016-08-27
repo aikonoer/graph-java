@@ -1,16 +1,14 @@
-## graph-java
+# graph-java
 
-
-
-#Distance problem:
+##Distance problem:
 
 Iterate the neighbours to find the next vertex. Do this until the last vertex then accumulate the edges.
 
-#Shortest path problem:
+##Shortest path problem:
 
 Implemented the Djikstra Shortest Path 
 
-#Possible routes problem:
+##Possible routes problem:
 
 Scanned vertex in a Depth First Search traversal method.
 
