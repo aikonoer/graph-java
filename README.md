@@ -1,4 +1,4 @@
-# graph-java
+# Graph API 
 
 ##Distance problem:
 
