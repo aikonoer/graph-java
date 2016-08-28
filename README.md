@@ -1,4 +1,4 @@
-# Graph API 
+# Graph Problems
 
 ##Distance problem:
 
